@@ -1,1 +1,1024 @@
-place for compound interest tool.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compound Interest Calculator — Insights by Maddy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --void: #0D0D12;
+      --void-2: #13131A;
+      --surface: #1C1C26;
+      --surface-2: #252533;
+      --surface-3: #2E2E3F;
+      --ember: #FF5C35;
+      --ember-dim: rgba(255, 92, 53, 0.12);
+      --ember-glow: rgba(255, 92, 53, 0.25);
+      --gold: #F5B942;
+      --blue: #4A9EFF;
+      --green: #5EC97A;
+      --text: #E8E8F0;
+      --text-muted: #8888A0;
+      --text-faint: #55556A;
+      --border: rgba(255,255,255,0.07);
+      --radius: 12px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--void);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+    }
+    .logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .logo span { color: var(--ember); }
+    .back-link {
+      margin-left: auto;
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      padding: 48px 32px 32px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    .hero-tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ember);
+      margin-bottom: 10px;
+    }
+    .hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+    .hero p { color: var(--text-muted); max-width: 540px; font-size: 15px; }
+
+    /* LAYOUT */
+    .main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 32px 64px;
+      display: grid;
+      grid-template-columns: 390px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* PANEL */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .panel-header {
+      padding: 16px 22px;
+      border-bottom: 1px solid var(--border);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .panel-body { padding: 22px; }
+
+    /* FIELD */
+    .field { margin-bottom: 20px; }
+    .field:last-child { margin-bottom: 0; }
+    .field-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      user-select: none;
+    }
+    .field-label:hover { color: var(--text); }
+    .info-btn {
+      width: 15px; height: 15px;
+      border-radius: 50%;
+      background: var(--surface-3);
+      border: 1px solid var(--border);
+      color: var(--text-faint);
+      font-size: 9px; font-weight: 700;
+      display: inline-flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .field-label:hover .info-btn {
+      background: var(--ember-dim);
+      border-color: var(--ember);
+      color: var(--ember);
+    }
+
+    .input-wrap { position: relative; }
+    .input-prefix, .input-suffix {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      font-size: 15px; font-weight: 600;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    .input-prefix { left: 14px; }
+    .input-suffix { right: 14px; }
+
+    input[type="number"], select {
+      width: 100%;
+      background: var(--void-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px; font-weight: 600;
+      padding: 11px 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+    }
+    input[type="number"].has-prefix { padding-left: 28px; }
+    input[type="number"].has-suffix { padding-right: 32px; }
+    input[type="number"]:focus, select:focus {
+      border-color: var(--ember);
+      box-shadow: 0 0 0 3px var(--ember-dim);
+    }
+    input[type="number"]::-webkit-inner-spin-button { opacity: 0; }
+    select {
+      cursor: pointer;
+      padding-right: 36px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238888A0' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+    }
+
+    /* TWO-COL INPUTS */
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    /* RANGE */
+    .range-row { display: flex; gap: 10px; align-items: center; }
+    .range-val {
+      min-width: 58px;
+      background: var(--void-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 10px;
+      font-size: 14px; font-weight: 600;
+      text-align: center; flex-shrink: 0;
+    }
+    input[type="range"] {
+      -webkit-appearance: none; appearance: none;
+      flex: 1; height: 4px; border-radius: 2px;
+      background: var(--surface-3);
+      outline: none; cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--ember);
+      box-shadow: 0 0 0 3px var(--ember-dim);
+      cursor: pointer; transition: box-shadow 0.2s;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover {
+      box-shadow: 0 0 0 6px var(--ember-glow);
+    }
+
+    /* TOGGLE */
+    .toggle-row {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--void-2);
+      border: 1px solid var(--border);
+      border-radius: 8px; padding: 11px 14px;
+      margin-bottom: 10px; cursor: pointer;
+    }
+    .toggle-row:hover { border-color: rgba(255,255,255,0.12); }
+    .toggle-label { font-size: 13px; font-weight: 500; color: var(--text-muted); }
+    .toggle {
+      width: 34px; height: 19px;
+      background: var(--surface-3);
+      border-radius: 10px;
+      position: relative; transition: background 0.2s; flex-shrink: 0;
+    }
+    .toggle.on { background: var(--ember); }
+    .toggle::after {
+      content: '';
+      position: absolute; top: 3px; left: 3px;
+      width: 13px; height: 13px;
+      border-radius: 50%; background: white;
+      transition: transform 0.2s;
+    }
+    .toggle.on::after { transform: translateX(15px); }
+
+    /* HINT */
+    .field-hint {
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--text-faint);
+      line-height: 1.5;
+    }
+    .field-hint strong { color: var(--text-muted); }
+
+    /* CALC BTN */
+    .calc-btn {
+      width: 100%; padding: 14px;
+      background: var(--ember); color: white; border: none;
+      border-radius: 8px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 17px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      cursor: pointer; transition: all 0.2s; margin-top: 20px;
+    }
+    .calc-btn:hover {
+      background: #FF7150;
+      box-shadow: 0 4px 20px var(--ember-glow);
+      transform: translateY(-1px);
+    }
+    .calc-btn:active { transform: translateY(0); }
+
+    /* RIGHT COLUMN */
+    .right-col { display: flex; flex-direction: column; gap: 20px; }
+
+    /* RESULT HERO */
+    .result-hero {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px;
+      display: none;
+    }
+    .result-hero.visible { display: block; }
+    .result-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 4px;
+    }
+    .result-amount {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(40px, 5.5vw, 60px);
+      font-weight: 800; color: var(--ember);
+      line-height: 1; margin-bottom: 4px;
+    }
+    .result-subline {
+      font-size: 13px; color: var(--text-muted); margin-bottom: 22px;
+    }
+    .result-subline strong { color: var(--gold); }
+
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .stat-chip {
+      background: var(--void-2);
+      border: 1px solid var(--border);
+      border-radius: 8px; padding: 13px 14px;
+    }
+    .stat-chip-label {
+      font-size: 10px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--text-faint); margin-bottom: 5px;
+    }
+    .stat-chip-value {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 700; color: var(--text);
+    }
+    .stat-chip-value.green { color: var(--green); }
+    .stat-chip-value.blue { color: var(--blue); }
+
+    /* CHART */
+    .chart-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px; display: none;
+    }
+    .chart-panel.visible { display: block; }
+    .chart-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 14px;
+    }
+    .chart-container { position: relative; height: 230px; }
+
+    /* INSIGHTS */
+    .insights-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px; display: none;
+    }
+    .insights-panel.visible { display: block; }
+    .insights-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ember); margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .insights-title::before {
+      content: ''; width: 3px; height: 13px;
+      background: var(--ember); border-radius: 2px; display: inline-block;
+    }
+    .insight-item {
+      display: flex; gap: 12px;
+      padding: 11px 0; border-bottom: 1px solid var(--border);
+    }
+    .insight-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .insight-icon { font-size: 17px; flex-shrink: 0; margin-top: 2px; }
+    .insight-text { font-size: 13px; line-height: 1.65; color: var(--text-muted); }
+    .insight-text strong { color: var(--text); }
+
+    /* WAITING */
+    .waiting-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden; display: none;
+    }
+    .waiting-panel.visible { display: block; }
+    .waiting-header {
+      padding: 14px 20px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .waiting-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .waiting-toggle-row { display: flex; gap: 6px; }
+    .wait-btn {
+      padding: 4px 11px;
+      border-radius: 5px; border: 1px solid var(--border);
+      background: transparent; color: var(--text-muted);
+      font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    }
+    .wait-btn.active {
+      background: var(--ember-dim); border-color: var(--ember); color: var(--ember);
+    }
+    .waiting-body { padding: 18px 20px; }
+    .waiting-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .wait-card {
+      background: var(--void-2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 13px; text-align: center;
+    }
+    .wait-card.now { border-color: var(--ember); }
+    .wait-card-label {
+      font-size: 10px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text-faint); margin-bottom: 6px;
+    }
+    .wait-card.now .wait-card-label { color: var(--ember); }
+    .wait-card-amount {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 3px;
+    }
+    .wait-card.now .wait-card-amount { color: var(--ember); }
+    .wait-card-diff { font-size: 10px; color: #E05555; }
+    .wait-card.now .wait-card-diff { color: var(--text-faint); }
+
+    /* TOOLTIP MODAL */
+    .tooltip-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(4px);
+      z-index: 100; align-items: center; justify-content: center; padding: 24px;
+    }
+    .tooltip-overlay.open { display: flex; }
+    .tooltip-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+      max-width: 420px; width: 100%;
+      position: relative; animation: popIn 0.18s ease;
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.95) translateY(8px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .tooltip-close {
+      position: absolute; top: 14px; right: 14px;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--surface-3); border: none;
+      color: var(--text-muted); font-size: 14px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .tooltip-close:hover { background: var(--surface-2); color: var(--text); }
+    .tt-tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ember); margin-bottom: 6px;
+    }
+    .tt-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 24px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.02em;
+      margin-bottom: 10px; color: var(--text);
+    }
+    .tt-desc {
+      font-size: 13px; color: var(--text-muted);
+      line-height: 1.7; margin-bottom: 14px;
+    }
+    .tt-example {
+      background: var(--void-2);
+      border: 1px solid var(--ember-dim);
+      border-left: 3px solid var(--ember);
+      border-radius: 8px; padding: 13px 15px;
+      font-size: 12px; color: var(--text-muted); line-height: 1.65;
+    }
+    .tt-example strong { color: var(--ember); }
+
+    /* PLACEHOLDER */
+    .placeholder { text-align: center; padding: 44px 24px; color: var(--text-faint); }
+    .placeholder-icon { font-size: 38px; margin-bottom: 12px; opacity: 0.45; }
+    .placeholder p { font-size: 13px; line-height: 1.7; }
+
+    /* RESPONSIVE */
+    @media (max-width: 820px) {
+      header { padding: 14px 20px; }
+      .hero { padding: 30px 20px 22px; }
+      .main { padding: 0 20px 48px; grid-template-columns: 1fr; }
+      .waiting-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Insights <span>by</span> Maddy</div>
+  <a href="../../index.html" class="back-link">← All Tools</a>
+</header>
+
+<div class="hero">
+  <div class="hero-tag">Calculator</div>
+  <h1>Compound<br>Interest</h1>
+  <p>See how your money grows over time — and how much it costs to wait. Fill in your numbers and hit Calculate.</p>
+</div>
+
+<div class="main">
+
+  <!-- LEFT: INPUTS -->
+  <div class="panel">
+    <div class="panel-header">Your Numbers</div>
+    <div class="panel-body">
+
+      <div class="field">
+        <div class="field-label" onclick="openTooltip('principal')">
+          Starting Amount <span class="info-btn">i</span>
+        </div>
+        <div class="input-wrap">
+          <span class="input-prefix">€</span>
+          <input type="number" id="principal" class="has-prefix" value="10000" min="0" step="100" />
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label" onclick="openTooltip('rate')">
+          Annual Growth Rate <span class="info-btn">i</span>
+        </div>
+        <div class="input-wrap">
+          <input type="number" id="rate" class="has-suffix" value="7" min="0" max="100" step="0.1" />
+          <span class="input-suffix">%</span>
+        </div>
+        <div class="field-hint">
+          💡 <strong>Assumed rates:</strong> Savings account ~3–4% · Euro bond ETF ~4–5% · S&amp;P 500 hist. avg ~10% · Global index fund ~7–8%
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label" onclick="openTooltip('frequency')">
+          Compounding Frequency <span class="info-btn">i</span>
+        </div>
+        <div class="input-wrap">
+          <select id="frequency">
+            <option value="365">Daily</option>
+            <option value="12" selected>Monthly</option>
+            <option value="4">Quarterly</option>
+            <option value="1">Yearly</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label" onclick="openTooltip('time')">
+          Time Period <span class="info-btn">i</span>
+        </div>
+        <div class="range-row">
+          <input type="range" id="years" min="1" max="50" value="20"
+            oninput="document.getElementById('years-val').textContent = this.value + ' yr'" />
+          <div class="range-val" id="years-val">20 yr</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label" onclick="openTooltip('contributions')">
+          Monthly Contributions <span class="info-btn">i</span>
+        </div>
+        <div class="toggle-row" onclick="toggleContrib()">
+          <span class="toggle-label" id="contrib-label">Add a monthly top-up?</span>
+          <div class="toggle" id="contrib-toggle"></div>
+        </div>
+        <div id="contrib-fields" style="display:none;">
+          <div class="field-row">
+            <div class="input-wrap">
+              <span class="input-prefix">€</span>
+              <input type="number" id="monthly" class="has-prefix" value="200" min="0" step="50" />
+            </div>
+            <div style="position:relative;">
+              <input type="number" id="stepup" class="has-suffix" value="0" min="0" max="50" step="0.5"
+                placeholder="0" title="Annual step-up %" />
+              <span class="input-suffix">%</span>
+            </div>
+          </div>
+          <div class="field-hint" style="margin-top:6px;">
+            Left: monthly amount &nbsp;·&nbsp; Right: annual step-up % &nbsp;<span onclick="openTooltip('stepup')" style="color:var(--ember);cursor:pointer;font-weight:600;">What's this? ↗</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="calc-btn" onclick="calculate()">Calculate →</button>
+    </div>
+  </div>
+
+  <!-- RIGHT: RESULTS -->
+  <div class="right-col">
+
+    <div class="result-hero" id="result-hero">
+      <div class="result-label">Final Balance after <span id="res-years"></span></div>
+      <div class="result-amount" id="res-amount"></div>
+      <div class="result-subline" id="res-subline"></div>
+      <div class="stats-row">
+        <div class="stat-chip">
+          <div class="stat-chip-label">Total Invested</div>
+          <div class="stat-chip-value blue" id="res-invested"></div>
+        </div>
+        <div class="stat-chip">
+          <div class="stat-chip-label">Interest Earned</div>
+          <div class="stat-chip-value green" id="res-interest"></div>
+        </div>
+        <div class="stat-chip">
+          <div class="stat-chip-label">Interest Share</div>
+          <div class="stat-chip-value" id="res-pct"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-panel" id="chart-panel">
+      <div class="chart-title">Growth Over Time</div>
+      <div class="chart-container"><canvas id="growth-chart"></canvas></div>
+    </div>
+
+    <div class="insights-panel" id="insights-panel">
+      <div class="insights-title">Plain English</div>
+      <div id="insights-list"></div>
+    </div>
+
+    <div class="waiting-panel" id="waiting-panel">
+      <div class="waiting-header">
+        <div class="waiting-title">The Real Cost of Waiting</div>
+        <div class="waiting-toggle-row">
+          <button class="wait-btn active" onclick="setWaitMode('years')" id="wbtn-years">By Years</button>
+          <button class="wait-btn" onclick="setWaitMode('amount')" id="wbtn-amount">By Amount</button>
+        </div>
+      </div>
+      <div class="waiting-body">
+        <div class="waiting-grid" id="waiting-grid"></div>
+        <div class="field-hint" style="margin-top:12px;">* All other inputs unchanged. Starting later = fewer compounding years.</div>
+      </div>
+    </div>
+
+    <div class="placeholder" id="placeholder">
+      <div class="placeholder-icon">📈</div>
+      <p>Enter your numbers and hit <strong style="color:var(--text-muted)">Calculate</strong> to see<br>your growth chart, plain-English insights, and the cost of waiting.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- TOOLTIP MODAL -->
+<div class="tooltip-overlay" id="tooltip-overlay" onclick="handleOverlayClick(event)">
+  <div class="tooltip-box">
+    <button class="tooltip-close" onclick="closeTooltip()">✕</button>
+    <div class="tt-tag">What does this mean?</div>
+    <div class="tt-title" id="tt-title"></div>
+    <div class="tt-desc" id="tt-desc"></div>
+    <div class="tt-example" id="tt-example"></div>
+  </div>
+</div>
+
+<script>
+/* ─────────────────────────────────────────────
+   TOOLTIP DATA
+───────────────────────────────────────────── */
+const TOOLTIPS = {
+  principal: {
+    title: "Starting Amount",
+    desc: "The lump sum you're investing right now, before any growth or regular additions. It's the seed your wealth grows from. It can be zero — if you're starting with nothing and relying on monthly contributions.",
+    example: "💰 <strong>Example:</strong> You have €10,000 saved. You put it into an index fund today. That €10,000 is your starting amount. Even with no further additions, compound growth will multiply it over time."
+  },
+  rate: {
+    title: "Annual Growth Rate",
+    desc: "How much your investment grows per year, as a percentage. For cash savings this is the interest rate your bank pays. For investments it's the expected total return — not guaranteed, but based on historical averages. Always use a realistic (conservative) rate.",
+    example: "📊 <strong>Example:</strong> A global index fund (e.g. MSCI World) has historically returned roughly 7–8% per year after inflation. At 7%, money doubles every ~10 years. At 10%, every ~7 years. Use 5–7% for a conservative projection."
+  },
+  frequency: {
+    title: "Compounding Frequency",
+    desc: "How often interest is calculated and added to your balance. Each time it compounds, the new interest starts earning interest too — that's the snowball. Daily beats monthly beats yearly, though the difference is smaller than people expect.",
+    example: "🔄 <strong>Example:</strong> €10,000 at 10% for 1 year: Yearly compounding → €11,000.00. Monthly compounding → €11,047.13. Daily compounding → €11,051.56. Over 30 years these differences become thousands."
+  },
+  time: {
+    title: "Time Period",
+    desc: "How many years you leave your money invested. Time is the single most powerful ingredient in compounding. The effect is exponential — the later years contribute far more than the early years because there's a much bigger base earning interest.",
+    example: "⏳ <strong>Example:</strong> €10,000 at 7% — Year 10: €19,672. Year 20: €38,697. Year 30: €76,123. The third decade (years 21–30) added €37,000 — more than the entire first two decades combined."
+  },
+  contributions: {
+    title: "Monthly Contributions",
+    desc: "A fixed amount you add to your investment every month, on top of your starting amount. Regular contributions are the habit that builds real wealth — even small amounts snowball dramatically over decades.",
+    example: "💸 <strong>Example:</strong> €10,000 starting, 7% return, 20 years. Without contributions: €38,697. With €200/month: ~€90,000. That €200/month cost €48,000 to contribute but generated over €30,000 extra in interest — purely from the power of regularity."
+  },
+  stepup: {
+    title: "Annual Step-Up %",
+    desc: "Each year, your monthly contribution automatically increases by this percentage. This mirrors salary growth — as you earn more, you invest more. Even a small step-up dramatically boosts your final balance over long periods.",
+    example: "📈 <strong>Example:</strong> Starting with €200/month at 3% step-up — Year 1: €200/month. Year 2: €206/month. Year 5: €225/month. Year 10: €261/month. Year 20: €351/month. The compounding of contributions on top of the compounding of returns is extremely powerful."
+  }
+};
+
+function openTooltip(key) {
+  const t = TOOLTIPS[key];
+  if (!t) return;
+  document.getElementById('tt-title').textContent = t.title;
+  document.getElementById('tt-desc').textContent = t.desc;
+  document.getElementById('tt-example').innerHTML = t.example;
+  document.getElementById('tooltip-overlay').classList.add('open');
+}
+function closeTooltip() {
+  document.getElementById('tooltip-overlay').classList.remove('open');
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('tooltip-overlay')) closeTooltip();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeTooltip(); });
+
+
+/* ─────────────────────────────────────────────
+   TOGGLE
+───────────────────────────────────────────── */
+let contribOn = false;
+function toggleContrib() {
+  contribOn = !contribOn;
+  document.getElementById('contrib-toggle').classList.toggle('on', contribOn);
+  document.getElementById('contrib-fields').style.display = contribOn ? 'block' : 'none';
+  document.getElementById('contrib-label').textContent = contribOn ? 'Monthly top-up enabled' : 'Add a monthly top-up?';
+}
+
+
+/* ─────────────────────────────────────────────
+   FORMATTING
+───────────────────────────────────────────── */
+function fmt(n) {
+  n = Math.round(n);
+  if (n >= 1_000_000) return '€' + (n / 1_000_000).toFixed(2) + 'M';
+  return '€' + n.toLocaleString('de-DE');  // e.g. 38.697
+}
+function fmtShort(n) {
+  n = Math.round(n);
+  if (n >= 1_000_000) return '€' + (n / 1_000_000).toFixed(1) + 'M';
+  if (n >= 10_000)    return '€' + (n / 1_000).toFixed(0) + 'k';
+  if (n >= 1_000)     return '€' + (n / 1_000).toFixed(1) + 'k';
+  return '€' + n;
+}
+
+
+/* ─────────────────────────────────────────────
+   CORE CALCULATION ENGINE
+   ─────────────────────────────────────────────
+   Strategy: convert stated annual rate + compounding
+   frequency to an EFFECTIVE MONTHLY RATE, then simulate
+   month-by-month. This correctly handles all frequency
+   options with monthly contributions and step-up.
+
+   Effective annual rate (EAR):
+     EAR = (1 + annualRate/freq)^freq - 1
+
+   Effective monthly rate:
+     r_m = (1 + EAR)^(1/12) - 1
+
+   Each month:
+     balance = (balance + contribution) × (1 + r_m)
+
+   Step-up: contribution increases by stepUpPct% after
+   each complete year.
+───────────────────────────────────────────── */
+function simulate(principal, annualRatePct, compFreq, years, monthlyContrib, stepUpPct) {
+  // Validate
+  principal     = Math.max(0, principal || 0);
+  annualRatePct = Math.max(0, annualRatePct || 0);
+  monthlyContrib = Math.max(0, monthlyContrib || 0);
+  stepUpPct     = Math.max(0, stepUpPct || 0);
+  years         = Math.max(1, Math.round(years));
+  compFreq      = compFreq || 12;
+
+  // Effective monthly rate
+  let r_m = 0;
+  if (annualRatePct > 0) {
+    const r_period = annualRatePct / 100 / compFreq;
+    const EAR = Math.pow(1 + r_period, compFreq) - 1;
+    r_m = Math.pow(1 + EAR, 1 / 12) - 1;
+  }
+
+  let balance    = principal;
+  let totalInvested = principal;
+  let currentMonthly = monthlyContrib;
+
+  // Snapshot at year 0
+  const snapshots = [{ year: 0, balance: principal, invested: principal }];
+
+  for (let m = 1; m <= years * 12; m++) {
+    // Contribute at START of month, then earn interest
+    balance += currentMonthly;
+    totalInvested += currentMonthly;
+    balance *= (1 + r_m);
+
+    if (m % 12 === 0) {
+      snapshots.push({ year: m / 12, balance, invested: totalInvested });
+      // Step-up contribution at end of each year (applies from next year)
+      if (stepUpPct > 0) {
+        currentMonthly *= (1 + stepUpPct / 100);
+      }
+    }
+  }
+
+  return {
+    snapshots,        // year-by-year data
+    finalBalance: balance,
+    totalInvested,
+    interestEarned: balance - totalInvested
+  };
+}
+
+
+/* ─────────────────────────────────────────────
+   CHART
+───────────────────────────────────────────── */
+let chartInstance = null;
+function renderChart(snapshots) {
+  const ctx = document.getElementById('growth-chart').getContext('2d');
+  if (chartInstance) chartInstance.destroy();
+
+  // For large year counts, show every other year to keep chart clean
+  const step = snapshots.length > 25 ? 2 : 1;
+  const pts  = snapshots.filter((_, i) => i % step === 0 || i === snapshots.length - 1);
+
+  const labels   = pts.map(d => d.year === 0 ? 'Now' : `Yr ${d.year}`);
+  const balances = pts.map(d => d.balance);
+  const invested = pts.map(d => d.invested);
+
+  chartInstance = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Total Balance',
+          data: balances,
+          borderColor: '#FF5C35',
+          backgroundColor: 'rgba(255,92,53,0.09)',
+          fill: true, tension: 0.4, borderWidth: 2.5,
+          pointRadius: 0, pointHoverRadius: 5,
+          pointHoverBackgroundColor: '#FF5C35'
+        },
+        {
+          label: 'Money Invested',
+          data: invested,
+          borderColor: '#4A9EFF',
+          backgroundColor: 'rgba(74,158,255,0.06)',
+          fill: true, tension: 0, borderWidth: 1.5,
+          borderDash: [5, 4],
+          pointRadius: 0, pointHoverRadius: 4,
+          pointHoverBackgroundColor: '#4A9EFF'
+        }
+      ]
+    },
+    options: {
+      animation: { duration: 800, easing: 'easeInOutQuart' },
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          labels: {
+            color: '#8888A0',
+            font: { family: 'Inter', size: 11 },
+            boxWidth: 11, padding: 14
+          }
+        },
+        tooltip: {
+          backgroundColor: '#1C1C26',
+          borderColor: 'rgba(255,255,255,0.07)',
+          borderWidth: 1,
+          titleColor: '#E8E8F0',
+          bodyColor: '#8888A0',
+          padding: 11,
+          callbacks: {
+            label: ctx => ` ${ctx.dataset.label}: ${fmtShort(ctx.raw)}`
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#55556A', font: { size: 10 }, maxTicksLimit: 9 },
+          grid: { color: 'rgba(255,255,255,0.04)' }
+        },
+        y: {
+          ticks: { color: '#55556A', font: { size: 10 }, callback: v => fmtShort(v) },
+          grid: { color: 'rgba(255,255,255,0.04)' }
+        }
+      }
+    }
+  });
+}
+
+
+/* ─────────────────────────────────────────────
+   INSIGHTS
+───────────────────────────────────────────── */
+function generateInsights(snapshots, principal, annualRate, monthlyContrib, stepUpPct, years, result) {
+  const items = [];
+  const { finalBalance, totalInvested, interestEarned } = result;
+
+  // 1. Core result in plain terms
+  if (principal > 0 && monthlyContrib === 0) {
+    const mult = finalBalance / principal;
+    items.push({ icon: '🚀', text: `Your <strong>€${Math.round(principal).toLocaleString('de-DE')}</strong> starting amount becomes <strong>${fmt(finalBalance)}</strong> — <strong>${mult.toFixed(1)}× your money</strong>, without ever adding to it.` });
+  } else if (principal === 0) {
+    items.push({ icon: '🚀', text: `Investing <strong>${fmt(monthlyContrib)}/month</strong> builds to <strong>${fmt(finalBalance)}</strong>. You'll contribute <strong>${fmt(totalInvested)}</strong> in total, and the rest — <strong>${fmt(interestEarned)}</strong> — is pure interest.` });
+  } else {
+    const mult = finalBalance / totalInvested;
+    items.push({ icon: '🚀', text: `You invest <strong>${fmt(totalInvested)}</strong> in total and end up with <strong>${fmt(finalBalance)}</strong>. Every euro you put in generates <strong>€${(mult - 1).toFixed(2)} in returns</strong> on top.` });
+  }
+
+  // 2. Crossover — when interest earned > money contributed (excl. principal)
+  if (monthlyContrib > 0) {
+    const crossover = snapshots.find(d => d.balance - d.invested > d.invested - principal);
+    if (crossover && crossover.year > 0) {
+      items.push({ icon: '⚡', text: `At <strong>year ${crossover.year}</strong>, your cumulative interest surpasses your total contributions. After that point, <strong>the market is contributing more than you are.</strong>` });
+    }
+  }
+
+  // 3. Last decade power (only if >15 years)
+  if (years > 15) {
+    const snap10  = snapshots[snapshots.length - 11] || snapshots[0];
+    const lastDecadeGain = finalBalance - snap10.balance;
+    const pct = Math.round(lastDecadeGain / finalBalance * 100);
+    items.push({ icon: '📈', text: `The <strong>final 10 years</strong> of compounding add <strong>${fmt(lastDecadeGain)}</strong> — that's <strong>${pct}% of your total balance</strong>. This is why time in the market matters more than timing it.` });
+  }
+
+  // 4. Rule of 72
+  if (annualRate > 0) {
+    const doublingYrs = (72 / annualRate).toFixed(1);
+    const doublings   = Math.floor(years / parseFloat(doublingYrs));
+    items.push({ icon: '🔢', text: `At ${annualRate}%, money doubles roughly every <strong>${doublingYrs} years</strong> (Rule of 72). Over ${years} years that's <strong>${doublings} doubling${doublings !== 1 ? 's' : ''}</strong> of your principal.` });
+  }
+
+  return items;
+}
+
+
+/* ─────────────────────────────────────────────
+   COST OF WAITING
+───────────────────────────────────────────── */
+let waitMode = 'years';
+let lastInputs = null;
+
+function setWaitMode(mode) {
+  waitMode = mode;
+  document.getElementById('wbtn-years').classList.toggle('active', mode === 'years');
+  document.getElementById('wbtn-amount').classList.toggle('active', mode === 'amount');
+  if (lastInputs) renderWaiting(lastInputs);
+}
+
+function renderWaiting({ principal, rate, freq, years, monthly, stepup, baseResult }) {
+  const grid = document.getElementById('waiting-grid');
+  grid.innerHTML = '';
+
+  const scenarios = waitMode === 'years'
+    ? [
+        { label: 'Start Now',  mod: s => ({ ...s, years: s.years }) },
+        { label: 'Wait 1 yr',  mod: s => ({ ...s, years: Math.max(1, s.years - 1) }) },
+        { label: 'Wait 3 yrs', mod: s => ({ ...s, years: Math.max(1, s.years - 3) }) },
+        { label: 'Wait 5 yrs', mod: s => ({ ...s, years: Math.max(1, s.years - 5) }) }
+      ]
+    : [
+        { label: 'Full amount', mod: s => s },
+        { label: '75% amount',  mod: s => ({ ...s, principal: s.principal * 0.75, monthly: s.monthly * 0.75 }) },
+        { label: '50% amount',  mod: s => ({ ...s, principal: s.principal * 0.50, monthly: s.monthly * 0.50 }) },
+        { label: '25% amount',  mod: s => ({ ...s, principal: s.principal * 0.25, monthly: s.monthly * 0.25 }) }
+      ];
+
+  const base = { principal, rate, freq, years, monthly, stepup };
+
+  scenarios.forEach((s, i) => {
+    const cfg = s.mod(base);
+    const r = simulate(cfg.principal, cfg.rate, cfg.freq, cfg.years, cfg.monthly, cfg.stepup);
+    const loss = baseResult - r.finalBalance;
+    const isNow = i === 0;
+    grid.innerHTML += `
+      <div class="wait-card ${isNow ? 'now' : ''}">
+        <div class="wait-card-label">${s.label}</div>
+        <div class="wait-card-amount">${fmtShort(r.finalBalance)}</div>
+        <div class="wait-card-diff">${isNow ? '✓ Best' : `−${fmtShort(loss)}`}</div>
+      </div>`;
+  });
+}
+
+
+/* ─────────────────────────────────────────────
+   MAIN CALCULATE
+───────────────────────────────────────────── */
+function calculate() {
+  const principal = parseFloat(document.getElementById('principal').value) || 0;
+  const rate      = parseFloat(document.getElementById('rate').value)      || 0;
+  const freq      = parseInt(document.getElementById('frequency').value)   || 12;
+  const years     = parseInt(document.getElementById('years').value)       || 20;
+  const monthly   = contribOn ? (parseFloat(document.getElementById('monthly').value) || 0) : 0;
+  const stepup    = contribOn ? (parseFloat(document.getElementById('stepup').value)  || 0) : 0;
+
+  // Run simulation — single source of truth for all outputs
+  const result = simulate(principal, rate, freq, years, monthly, stepup);
+  const { snapshots, finalBalance, totalInvested, interestEarned } = result;
+
+  // ── RESULT HERO ──
+  const mult = totalInvested > 0 ? finalBalance / totalInvested : 1;
+  document.getElementById('res-years').textContent     = years + (years === 1 ? ' year' : ' years');
+  document.getElementById('res-amount').textContent    = fmt(finalBalance);
+  document.getElementById('res-subline').innerHTML     = `You invested <strong style="color:var(--gold)">${fmt(totalInvested)}</strong> — interest did the rest`;
+  document.getElementById('res-invested').textContent  = fmt(totalInvested);
+  document.getElementById('res-interest').textContent  = fmt(Math.max(0, interestEarned));
+  document.getElementById('res-pct').textContent       = finalBalance > 0 ? Math.round(Math.max(0, interestEarned) / finalBalance * 100) + '%' : '0%';
+  document.getElementById('result-hero').classList.add('visible');
+
+  // ── CHART — uses exact same snapshots ──
+  renderChart(snapshots);
+  document.getElementById('chart-panel').classList.add('visible');
+
+  // ── INSIGHTS ──
+  const insightItems = generateInsights(snapshots, principal, rate, monthly, stepup, years, result);
+  document.getElementById('insights-list').innerHTML = insightItems.map(i =>
+    `<div class="insight-item">
+       <div class="insight-icon">${i.icon}</div>
+       <div class="insight-text">${i.text}</div>
+     </div>`
+  ).join('');
+  document.getElementById('insights-panel').classList.add('visible');
+
+  // ── COST OF WAITING ──
+  lastInputs = { principal, rate, freq, years, monthly, stepup, baseResult: finalBalance };
+  renderWaiting(lastInputs);
+  document.getElementById('waiting-panel').classList.add('visible');
+
+  // Hide placeholder
+  document.getElementById('placeholder').style.display = 'none';
+}
+
+// Run on load with defaults
+window.addEventListener('load', calculate);
+</script>
+</body>
+</html>
