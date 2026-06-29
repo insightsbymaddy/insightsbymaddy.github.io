@@ -1,1 +1,1180 @@
-place for tax guides
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Irish Tax Breakdown Guide — insightsbymaddy</title>
+<meta name="description" content="A plain English breakdown of every major tax Irish employees and investors pay in the Republic of Ireland — with worked euro examples.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,800;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void:      #080808;
+  --surface:   #101010;
+  --surface-2: #181818;
+  --surface-3: #1e1e1e;
+  --border:    #272727;
+  --border-2:  #333;
+  --ember:     #E84320;
+  --ember-hot: #FF5533;
+  --ember-dim: #7A2210;
+  --ember-bg:  rgba(232,67,32,0.06);
+  --white:     #F2F2F2;
+  --white-2:   #999;
+  --white-3:   #555;
+  --risk:      #CC2200;
+  --green:     #22C55E;
+  --green-dim: rgba(34,197,94,0.1);
+  --f-display: 'Barlow Condensed', sans-serif;
+  --f-body:    'Inter', sans-serif;
+  --f-italic:  'Playfair Display', serif;
+  --ease: cubic-bezier(0.16,1,0.3,1);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--void);
+  color: var(--white);
+  font-family: var(--f-body);
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── LAYOUT ─────────────────────────────────────────── */
+.site-wrap { max-width: 860px; margin: 0 auto; padding: 0 1.5rem 6rem; }
+
+/* ── TOPBAR ──────────────────────────────────────────── */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 0; border-bottom: 1px solid var(--border);
+  margin-bottom: 0;
+  position: sticky; top: 0; background: rgba(8,8,8,0.96);
+  backdrop-filter: blur(8px); z-index: 100;
+}
+.brand { font-family: var(--f-display); font-size: 1rem; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; }
+.brand em { color: var(--ember); font-style: normal; }
+.topbar-tag { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; background: var(--ember); color: var(--white); }
+
+/* ── HERO ────────────────────────────────────────────── */
+.hero {
+  padding: 3.5rem 0 2.5rem;
+  border-bottom: 1px dashed var(--ember-dim);
+}
+.hero-eyebrow { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ember); margin-bottom: 1rem; }
+.hero-title {
+  font-family: var(--f-display); font-size: clamp(2.8rem, 7vw, 5rem);
+  font-weight: 900; text-transform: uppercase; line-height: 0.92;
+  letter-spacing: -0.01em; margin-bottom: 1.2rem;
+}
+.hero-title .accent { color: var(--ember); }
+.hero-desc { font-size: 1rem; color: var(--white-2); max-width: 580px; line-height: 1.75; }
+.hero-desc strong { color: var(--white); }
+
+/* ── DISCLAIMER ─────────────────────────────────────── */
+.disclaimer {
+  margin: 1.75rem 0;
+  padding: 1rem 1.25rem;
+  background: rgba(232,67,32,0.05);
+  border: 1px solid rgba(232,67,32,0.2);
+  border-left: 3px solid var(--ember);
+  border-radius: 4px;
+  font-size: 0.78rem;
+  color: var(--white-2);
+  line-height: 1.65;
+}
+.disclaimer strong { color: var(--ember); }
+
+/* ── STATS BAR ──────────────────────────────────────── */
+.stats-bar {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1px; background: var(--border); border: 1px solid var(--border);
+  border-radius: 8px; overflow: hidden; margin: 2rem 0;
+}
+.stat-cell {
+  background: var(--surface); padding: 1.1rem 1.25rem;
+}
+.stat-cell .num { font-family: var(--f-display); font-size: 2rem; font-weight: 900; color: var(--ember); line-height: 1; }
+.stat-cell .label { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white-3); margin-top: 0.3rem; }
+
+/* ── TOC ─────────────────────────────────────────────── */
+.toc {
+  margin: 2rem 0 2.5rem;
+  padding: 1.5rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+}
+.toc-title { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white-3); margin-bottom: 1rem; }
+.toc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.4rem; }
+.toc-link {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 0.8rem; font-weight: 500; color: var(--white-2);
+  text-decoration: none; padding: 0.45rem 0.6rem;
+  border-radius: 4px; transition: all 150ms;
+  border: 1px solid transparent;
+}
+.toc-link:hover { color: var(--ember); border-color: var(--ember-dim); background: var(--ember-bg); }
+.toc-num { font-family: var(--f-display); font-size: 0.75rem; font-weight: 900; color: var(--ember); opacity: 0.6; min-width: 20px; }
+
+/* ── TAX SECTION ─────────────────────────────────────── */
+.tax-section {
+  margin: 3rem 0 0;
+  padding-top: 3rem;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 72px;
+}
+.tax-section:first-of-type { border-top: none; }
+
+.section-header { margin-bottom: 2rem; }
+.section-eyebrow { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ember); margin-bottom: 0.6rem; }
+.section-title {
+  font-family: var(--f-display); font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 900; text-transform: uppercase; line-height: 0.92; letter-spacing: -0.01em;
+}
+.section-title .accent { color: var(--ember); }
+.section-title .risk { color: var(--risk); }
+.section-subtitle { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white-3); margin-top: 0.5rem; }
+
+.section-body { font-size: 0.92rem; color: var(--white-2); line-height: 1.8; margin-bottom: 1.5rem; }
+.section-body strong { color: var(--white); font-weight: 600; }
+.section-body .accent { color: var(--ember); }
+
+/* ── RATES TABLE ─────────────────────────────────────── */
+.rates-table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: 0.82rem; }
+.rates-table thead th {
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--white-3); padding: 0 0 0.6rem; text-align: left;
+  border-bottom: 1px solid var(--border-2);
+}
+.rates-table td { padding: 0.6rem 0; color: var(--white-2); border-bottom: 1px solid var(--border); vertical-align: top; }
+.rates-table tr:last-child td { border-bottom: none; }
+.rates-table .rate-val { font-family: var(--f-display); font-size: 1.15rem; font-weight: 900; color: var(--ember); }
+.rates-table .rate-val.high { color: #FF5533; }
+.rates-table .rate-val.risk-col { color: var(--risk); }
+
+/* ── EXAMPLE BOX ─────────────────────────────────────── */
+.example-box {
+  background: var(--surface-2);
+  border: 1px solid var(--border-2);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1.5rem 0;
+}
+.example-header {
+  padding: 0.75rem 1.25rem;
+  background: var(--surface-3);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.example-label { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ember); }
+.example-scenario { font-size: 0.78rem; color: var(--white-2); }
+.example-body { padding: 1.25rem; }
+
+.calc-row {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 1rem; padding: 0.45rem 0; border-bottom: 1px solid var(--border);
+  font-size: 0.82rem;
+}
+.calc-row:last-child { border-bottom: none; }
+.calc-row.total {
+  border-top: 1px solid var(--border-2);
+  padding-top: 0.7rem; margin-top: 0.3rem;
+  font-weight: 600; color: var(--white);
+}
+.calc-row.takehome {
+  margin-top: 0.5rem;
+  font-size: 0.9rem; font-weight: 700; color: var(--white);
+}
+.calc-label { color: var(--white-2); flex: 1; }
+.calc-label small { display: block; font-size: 0.68rem; color: var(--white-3); margin-top: 1px; }
+.calc-amount { font-family: var(--f-display); font-size: 1rem; font-weight: 900; text-align: right; white-space: nowrap; }
+.calc-amount.deduct { color: var(--risk); }
+.calc-amount.credit { color: var(--green); }
+.calc-amount.neutral { color: var(--white-2); }
+.calc-amount.final { color: var(--ember); font-size: 1.2rem; }
+
+/* ── CALLOUT ─────────────────────────────────────────── */
+.callout {
+  background: var(--ember-bg);
+  border: 1px solid rgba(232,67,32,0.2);
+  border-left: 3px solid var(--ember);
+  border-radius: 4px;
+  padding: 0.9rem 1.1rem;
+  font-size: 0.82rem;
+  color: var(--white-2);
+  line-height: 1.65;
+  margin: 1.25rem 0;
+}
+.callout strong { color: var(--ember); }
+.callout.risk {
+  background: rgba(204,34,0,0.06);
+  border-color: rgba(204,34,0,0.2);
+  border-left-color: var(--risk);
+}
+.callout.risk strong { color: var(--risk); }
+.callout.good {
+  background: var(--green-dim);
+  border-color: rgba(34,197,94,0.2);
+  border-left-color: var(--green);
+}
+.callout.good strong { color: var(--green); }
+
+/* ── SOURCE LINK ─────────────────────────────────────── */
+.source-link {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--white-3); text-decoration: none; margin-top: 1rem;
+  transition: color 150ms;
+}
+.source-link:hover { color: var(--ember); }
+.source-link::before { content: '↗'; font-size: 0.8rem; }
+
+/* ── KEY FACTS GRID ─────────────────────────────────── */
+.facts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+.fact-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 1rem; }
+.fact-card .fact-val { font-family: var(--f-display); font-size: 1.6rem; font-weight: 900; color: var(--ember); line-height: 1; }
+.fact-card .fact-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white-3); margin-top: 0.3rem; }
+.fact-card .fact-desc { font-size: 0.72rem; color: var(--white-2); margin-top: 0.4rem; line-height: 1.5; }
+
+/* ── DIVIDER ─────────────────────────────────────────── */
+.divider { border: none; border-top: 1px dashed var(--ember-dim); margin: 0.5rem 0; }
+
+/* ── FOOTER ──────────────────────────────────────────── */
+.footer {
+  margin-top: 5rem;
+  padding: 2.5rem 0 2rem;
+  border-top: 1px solid var(--border);
+}
+.footer-brand { font-family: var(--f-display); font-size: 1.1rem; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.footer-brand em { color: var(--ember); font-style: normal; }
+.footer-text { font-size: 0.72rem; color: var(--white-3); line-height: 1.7; max-width: 520px; }
+.footer-text a { color: var(--ember); text-decoration: none; }
+.footer-sources { margin-top: 1.5rem; }
+.footer-sources-title { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white-3); margin-bottom: 0.75rem; }
+.source-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.source-list li a {
+  font-size: 0.65rem; color: var(--white-3); text-decoration: none;
+  border: 1px solid var(--border-2); border-radius: 4px; padding: 3px 8px;
+  transition: all 150ms;
+}
+.source-list li a:hover { color: var(--ember); border-color: var(--ember-dim); }
+
+/* ── RISK BADGE ──────────────────────────────────────── */
+.risk-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--risk); border: 1px solid var(--risk); border-radius: 4px;
+  padding: 3px 8px; margin-bottom: 0.75rem;
+}
+
+/* ── BACK TO TOP ─────────────────────────────────────── */
+.back-top {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--white-3); text-decoration: none; margin-top: 2rem; transition: color 150ms;
+}
+.back-top:hover { color: var(--ember); }
+
+/* ── RESPONSIVE ──────────────────────────────────────── */
+@media (max-width: 600px) {
+  .stats-bar { grid-template-columns: 1fr 1fr; }
+  .facts-grid { grid-template-columns: 1fr 1fr; }
+  .toc-grid { grid-template-columns: 1fr; }
+  .hero-title { font-size: 2.4rem; }
+}
+
+/* ── PRINT ───────────────────────────────────────────── */
+@media print {
+  .topbar { position: static; }
+  body { background: white; color: black; }
+}
+</style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<div class="topbar">
+  <div class="site-wrap" style="width:100%; max-width:860px; margin:0 auto; padding:0 1.5rem; display:flex; align-items:center; justify-content:space-between;">
+    <div class="brand">insights<em>by</em>maddy</div>
+    <span class="topbar-tag">PLAIN ENGLISH FINANCE</span>
+  </div>
+</div>
+
+<div class="site-wrap">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-eyebrow">SERIES #002 · DEEP DIVE GUIDE · REPUBLIC OF IRELAND ONLY</div>
+    <h1 class="hero-title">IRISH TAX<br><span class="accent">BREAKDOWN</span><br>GUIDE</h1>
+    <p class="hero-desc">
+      Everything Irish employees and investors pay in tax — explained in plain English with <strong>worked euro examples</strong>.
+      All figures are for the <strong>2026 tax year</strong>, sourced from Revenue.ie and gov.ie.
+    </p>
+  </section>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer">
+    <strong>⚠️ Republic of Ireland only.</strong> All information on this page applies exclusively to tax residents of the Republic of Ireland. It does not apply to Northern Ireland or any other jurisdiction. Tax rules change — always verify current rates at <a href="https://www.revenue.ie" target="_blank" rel="noopener" style="color:var(--ember)">revenue.ie</a>. This is educational content, not financial or tax advice. Consult a qualified tax professional for your personal situation.
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-cell">
+      <div class="num">20%</div>
+      <div class="label">Income Tax (Standard Rate)</div>
+    </div>
+    <div class="stat-cell">
+      <div class="num">40%</div>
+      <div class="label">Income Tax (Higher Rate)</div>
+    </div>
+    <div class="stat-cell">
+      <div class="num">4.2%</div>
+      <div class="label">PRSI (Employee, 2026)</div>
+    </div>
+    <div class="stat-cell">
+      <div class="num">33%</div>
+      <div class="label">CGT / DIRT Rate</div>
+    </div>
+    <div class="stat-cell">
+      <div class="num">38%</div>
+      <div class="label">Deemed Disposal Rate</div>
+    </div>
+  </div>
+
+  <!-- TOC -->
+  <nav class="toc" id="contents">
+    <div class="toc-title">What's in this guide</div>
+    <div class="toc-grid">
+      <a href="#income-tax" class="toc-link"><span class="toc-num">01</span> Income Tax</a>
+      <a href="#usc" class="toc-link"><span class="toc-num">02</span> USC — Universal Social Charge</a>
+      <a href="#prsi" class="toc-link"><span class="toc-num">03</span> PRSI — Social Insurance</a>
+      <a href="#tax-credits" class="toc-link"><span class="toc-num">04</span> Tax Credits</a>
+      <a href="#cgt" class="toc-link"><span class="toc-num">05</span> CGT — Capital Gains Tax</a>
+      <a href="#deemed-disposal" class="toc-link"><span class="toc-num">06</span> Deemed Disposal</a>
+      <a href="#exit-tax" class="toc-link"><span class="toc-num">07</span> Exit Tax</a>
+      <a href="#dirt" class="toc-link"><span class="toc-num">08</span> DIRT — Deposit Interest Tax</a>
+    </div>
+  </nav>
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <!-- 01 INCOME TAX -->
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="tax-section" id="income-tax">
+    <div class="section-header">
+      <div class="section-eyebrow">TAX TERM #1</div>
+      <h2 class="section-title">INCOME<br><span class="accent">TAX</span></h2>
+      <div class="section-subtitle">Íos-Cháin Ioncaim — Republic of Ireland only</div>
+    </div>
+
+    <p class="section-body">
+      Income Tax is the government's cut of everything you earn. Ireland uses a <strong>two-rate system</strong>:
+      a standard rate of 20% on income up to a threshold, and a higher rate of 40% on everything above it.
+      The threshold depends on your circumstances — single, married, or with a qualifying child.
+    </p>
+
+    <table class="rates-table">
+      <thead><tr><th>Personal Circumstances (2026)</th><th>Standard Rate Band</th><th>Above the Band</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Single person</td>
+          <td><span class="rate-val">20%</span> on first €44,000</td>
+          <td><span class="rate-val high">40%</span> on balance</td>
+        </tr>
+        <tr>
+          <td>Single parent (SPCCC)</td>
+          <td><span class="rate-val">20%</span> on first €48,000</td>
+          <td><span class="rate-val high">40%</span> on balance</td>
+        </tr>
+        <tr>
+          <td>Married / Civil partnership (one income)</td>
+          <td><span class="rate-val">20%</span> on first €53,000</td>
+          <td><span class="rate-val high">40%</span> on balance</td>
+        </tr>
+        <tr>
+          <td>Married / Civil partnership (both earning)</td>
+          <td><span class="rate-val">20%</span> on first €53,000 + up to €35,000 more</td>
+          <td><span class="rate-val high">40%</span> on balance</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Important:</strong> The higher rate band increase for married couples is capped at the lower of €35,000 or the lower earner's income — and it cannot be transferred between spouses.
+    </div>
+
+    <div class="example-box">
+      <div class="example-header">
+        <span class="example-label">Worked Example</span>
+        <span class="example-scenario">Single person · Gross salary €60,000 · Tax year 2026</span>
+      </div>
+      <div class="example-body">
+        <div class="calc-row">
+          <div class="calc-label">Gross salary<small>Total income before any deductions</small></div>
+          <div class="calc-amount neutral">€60,000</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">First €44,000 @ 20%<small>Standard rate band for a single person</small></div>
+          <div class="calc-amount deduct">−€8,800</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Remaining €16,000 @ 40%<small>€60,000 − €44,000 = €16,000 in the higher band</small></div>
+          <div class="calc-amount deduct">−€6,400</div>
+        </div>
+        <div class="calc-row total">
+          <div class="calc-label">Gross income tax (before credits)</div>
+          <div class="calc-amount deduct">€15,200</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Less tax credits (Personal + PAYE)<small>See Tax Credits section — these reduce the actual bill</small></div>
+          <div class="calc-amount credit">+€4,000</div>
+        </div>
+        <div class="calc-row takehome">
+          <div class="calc-label">Income Tax payable</div>
+          <div class="calc-amount final">€11,200</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout good">
+      <strong>Tip:</strong> Your employer deducts Income Tax automatically through the PAYE system. You don't file a return unless you have other income sources or want to claim additional credits.
+    </div>
+
+    <a class="source-link" href="https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/tax-relief-charts/index.aspx" target="_blank" rel="noopener">Official source: Revenue.ie — Tax rates, bands and reliefs 2026</a>
+  </section>
+
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <!-- 02 USC -->
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="tax-section" id="usc">
+    <div class="section-header">
+      <div class="section-eyebrow">TAX TERM #2</div>
+      <h2 class="section-title">USC<br><span class="accent">UNIVERSAL</span><br>SOCIAL CHARGE</h2>
+      <div class="section-subtitle">Muirear Sóisialta Uilíoch — Republic of Ireland only</div>
+    </div>
+
+    <p class="section-body">
+      Introduced in 2011 as a temporary emergency measure. It's still here in 2026.
+      USC is effectively a <strong>second income tax</strong> applied in bands on top of your Income Tax.
+      If you earn more than <strong>€13,000 in a year</strong>, you pay USC on your full income — not just the amount above €13,000.
+    </p>
+
+    <table class="rates-table">
+      <thead><tr><th>Income Band (2026)</th><th>Cumulative Income</th><th>Rate</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>First €12,012</td>
+          <td>€0 → €12,012</td>
+          <td><span class="rate-val">0.5%</span></td>
+        </tr>
+        <tr>
+          <td>Next €16,688</td>
+          <td>€12,012 → €28,700</td>
+          <td><span class="rate-val">2%</span></td>
+        </tr>
+        <tr>
+          <td>Next €41,344</td>
+          <td>€28,700 → €70,044</td>
+          <td><span class="rate-val">3%</span></td>
+        </tr>
+        <tr>
+          <td>Balance above €70,044</td>
+          <td>€70,044+</td>
+          <td><span class="rate-val high">8%</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout risk">
+      <strong>Watch out:</strong> If your income is over €13,000, you pay USC on your full income from €0. There's no tax-free threshold — once you cross the line, USC applies to every euro you earned.
+    </div>
+
+    <div class="example-box">
+      <div class="example-header">
+        <span class="example-label">Worked Example</span>
+        <span class="example-scenario">Single person · Gross salary €60,000 · Tax year 2026</span>
+      </div>
+      <div class="example-body">
+        <div class="calc-row">
+          <div class="calc-label">First €12,012 @ 0.5%</div>
+          <div class="calc-amount deduct">−€60.06</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Next €16,688 @ 2%<small>€12,012 to €28,700</small></div>
+          <div class="calc-amount deduct">−€333.76</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Next €31,300 @ 3%<small>€28,700 to €60,000 (within the 3% band)</small></div>
+          <div class="calc-amount deduct">−€939.00</div>
+        </div>
+        <div class="calc-row takehome">
+          <div class="calc-label">Total USC payable</div>
+          <div class="calc-amount final">€1,332.82</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="facts-grid">
+      <div class="fact-card">
+        <div class="fact-val">€13k</div>
+        <div class="fact-label">Threshold</div>
+        <div class="fact-desc">Earn above this and USC applies to your full income, not just the excess.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-val">8%</div>
+        <div class="fact-label">Top USC Rate</div>
+        <div class="fact-desc">Applies on income above €70,044. Self-employed earning >€100k pay 11%.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-val">0%</div>
+        <div class="fact-label">Medical Card</div>
+        <div class="fact-desc">If you hold a full medical card and earn under €60,000, you pay a reduced 2% max USC rate.</div>
+      </div>
+    </div>
+
+    <a class="source-link" href="https://www.revenue.ie/en/jobs-and-pensions/usc/standard-rates-thresholds.aspx" target="_blank" rel="noopener">Official source: Revenue.ie — USC Standard Rates and Thresholds 2026</a>
+  </section>
+
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <!-- 03 PRSI -->
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="tax-section" id="prsi">
+    <div class="section-header">
+      <div class="section-eyebrow">TAX TERM #3</div>
+      <h2 class="section-title">PRSI<br><span class="accent">PAY RELATED</span><br>SOCIAL INSURANCE</h2>
+      <div class="section-subtitle">Árachas Sóisialta Pá-Choibhneasa — Republic of Ireland only</div>
+    </div>
+
+    <p class="section-body">
+      PRSI is your contribution into the national Social Insurance Fund. Think of it as paying into a pot.
+      In return, you build up <strong>entitlements</strong> — Jobseeker's Benefit, Maternity Benefit, Illness Benefit, and eventually the State Pension.
+      Most employees pay <strong>Class A PRSI at 4.2%</strong> of gross pay (this rate increased from 4.1% on 1 October 2025).
+      Your employer also pays PRSI on your behalf — typically at 11.15%.
+    </p>
+
+    <table class="rates-table">
+      <thead><tr><th>Contributor Type</th><th>Class</th><th>Rate (from Oct 2025)</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Employee (most workers)</td>
+          <td>Class A</td>
+          <td><span class="rate-val">4.2%</span> of gross pay</td>
+        </tr>
+        <tr>
+          <td>Employer contribution</td>
+          <td>Class A</td>
+          <td><span class="rate-val">11.15%</span> of gross pay</td>
+        </tr>
+        <tr>
+          <td>Self-employed</td>
+          <td>Class S</td>
+          <td><span class="rate-val">4.2%</span> of gross income</td>
+        </tr>
+        <tr>
+          <td>Unearned income (rents, dividends, savings interest) if over €5,000</td>
+          <td>Class K</td>
+          <td><span class="rate-val">4.2%</span> — does NOT build benefits</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Benefits you build up:</strong> Jobseeker's Benefit, Maternity Benefit (€289/week in 2026), Paternity Benefit, Illness Benefit, Carer's Benefit, and the State Pension (Contributory). You need a minimum number of <strong>"stamps" (contributions)</strong> to qualify for each benefit.
+    </div>
+
+    <div class="example-box">
+      <div class="example-header">
+        <span class="example-label">Worked Example</span>
+        <span class="example-scenario">Single person · Gross salary €60,000 · Tax year 2026</span>
+      </div>
+      <div class="example-body">
+        <div class="calc-row">
+          <div class="calc-label">€60,000 × 4.2%<small>Employee PRSI on full gross salary — no upper earnings limit</small></div>
+          <div class="calc-amount deduct">−€2,520</div>
+        </div>
+        <div class="calc-row takehome">
+          <div class="calc-label">PRSI payable (employee)</div>
+          <div class="calc-amount final">€2,520</div>
+        </div>
+        <hr class="divider">
+        <div class="calc-row" style="margin-top:0.5rem">
+          <div class="calc-label" style="color:var(--white-3)">Your employer also pays<small>This is on top of your salary — you don't see it deducted from your payslip</small></div>
+          <div class="calc-amount" style="color:var(--white-3)">€6,690</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout risk">
+      <strong>PRSI on unearned income:</strong> From 1 October 2025, rental income, dividends, savings interest, and investment gains above €5,000/year are also subject to 4.2% PRSI — but this Class K PRSI does NOT give you any social insurance benefits or add to your pension record.
+    </div>
+
+    <a class="source-link" href="https://www.citizensinformation.ie/en/social-welfare/irish-social-welfare-system/social-insurance-prsi/social-insurance/" target="_blank" rel="noopener">Official source: citizensinformation.ie — Social Insurance (PRSI) — updated 1 October 2025</a>
+  </section>
+
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <!-- 04 TAX CREDITS -->
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="tax-section" id="tax-credits">
+    <div class="section-header">
+      <div class="section-eyebrow">TAX TERM #4 — THE GOOD NEWS</div>
+      <h2 class="section-title">TAX<br><span class="accent">CREDITS</span></h2>
+      <div class="section-subtitle">Creidmheasanna Cánach — Republic of Ireland only</div>
+    </div>
+
+    <p class="section-body">
+      Tax credits are the best thing about the Irish tax system. Unlike a tax relief (which reduces your taxable income), a credit <strong>directly reduces the actual tax you owe</strong>. Every euro of credit saves you one euro of tax.
+      As a PAYE employee, you automatically get two credits worth <strong>€4,000 per year</strong> — no claiming required.
+    </p>
+
+    <table class="rates-table">
+      <thead><tr><th>Tax Credit (2026)</th><th>Who Gets It</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Personal Tax Credit</td>
+          <td>Everyone resident in Ireland</td>
+          <td><span class="rate-val">€2,000</span></td>
+        </tr>
+        <tr>
+          <td>Employee (PAYE) Tax Credit</td>
+          <td>PAYE employees</td>
+          <td><span class="rate-val">€2,000</span></td>
+        </tr>
+        <tr>
+          <td>Rent Tax Credit (max)</td>
+          <td>Private renters — claim via myAccount</td>
+          <td><span class="rate-val">€1,000</span> single / €2,000 joint</td>
+        </tr>
+        <tr>
+          <td>Mortgage Interest Tax Credit (max)</td>
+          <td>Mortgage holders in certain range — claim via myAccount</td>
+          <td><span class="rate-val">€1,250</span></td>
+        </tr>
+        <tr>
+          <td>Earned Income Credit (max)</td>
+          <td>Self-employed (replaces PAYE credit)</td>
+          <td><span class="rate-val">€2,000</span></td>
+        </tr>
+        <tr>
+          <td>Home Carer Credit (max)</td>
+          <td>Married couples where one partner cares at home</td>
+          <td><span class="rate-val">€1,950</span></td>
+        </tr>
+        <tr>
+          <td>Single Person Child Carer Credit</td>
+          <td>Single parents caring for a child</td>
+          <td><span class="rate-val">€1,900</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="example-box">
+      <div class="example-header">
+        <span class="example-label">Worked Example</span>
+        <span class="example-scenario">Single renter · PAYE employee · Tax year 2026</span>
+      </div>
+      <div class="example-body">
+        <div class="calc-row">
+          <div class="calc-label">Gross income tax (from Income Tax calculation)</div>
+          <div class="calc-amount neutral">€15,200</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Personal Tax Credit<small>Automatic — every Irish resident gets this</small></div>
+          <div class="calc-amount credit">−€2,000</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Employee (PAYE) Tax Credit<small>Automatic for PAYE employees</small></div>
+          <div class="calc-amount credit">−€2,000</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Rent Tax Credit<small>Must claim via myAccount — for private renters</small></div>
+          <div class="calc-amount credit">−€1,000</div>
+        </div>
+        <div class="calc-row takehome">
+          <div class="calc-label">Income Tax payable after credits</div>
+          <div class="calc-amount final">€10,200</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout good">
+      <strong>Don't leave money on the table:</strong> Many people only claim the automatic credits. Check myAccount on Revenue.ie — you may be entitled to Rent Credit (€1,000), medical expenses relief (20% of unreimbursed costs), working from home relief, and more. A 4-year lookback means you can still claim credits you missed since 2022.
+    </div>
+
+    <a class="source-link" href="https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/tax-relief-charts/index.aspx" target="_blank" rel="noopener">Official source: Revenue.ie — Tax credits, allowances and reliefs 2026</a>
+  </section>
+
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <!-- 05 CGT -->
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="tax-section" id="cgt">
+    <div class="section-header">
+      <div class="section-eyebrow">TAX TERM #5 — WHEN YOU SELL</div>
+      <h2 class="section-title">CGT<br>CAPITAL<br><span class="accent">GAINS TAX</span></h2>
+      <div class="section-subtitle">Cáin Gnóthachan Caipitiúil — Republic of Ireland only</div>
+    </div>
+
+    <p class="section-body">
+      Capital Gains Tax applies when you sell (or gift, or exchange) an asset for more than you paid for it.
+      The taxable amount is the <strong>profit (the gain)</strong>, not the full sale price.
+      The current CGT rate in Ireland is <strong>33%</strong> on most gains.
+      You get a personal annual exemption of <strong>€1,270</strong> — gains below this are tax-free.
+    </p>
+
+    <p class="section-body">
+      CGT applies to: shares, property (not your primary home), crypto assets, land, business assets, and most other valuable things you sell for a profit.
+    </p>
+
+    <div class="facts-grid">
+      <div class="fact-card">
+        <div class="fact-val">33%</div>
+        <div class="fact-label">CGT Rate</div>
+        <div class="fact-desc">Applies on most capital gains including shares, crypto, and investment property.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-val">€1,270</div>
+        <div class="fact-label">Annual Exemption</div>
+        <div class="fact-desc">Your first €1,270 of gains each year are tax-free. This cannot be carried over or transferred.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-val">0%</div>
+        <div class="fact-label">Primary Home (PPR)</div>
+        <div class="fact-desc">CGT does not apply to the sale of your principal private residence (with conditions).</div>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="example-header">
+        <span class="example-label">Worked Example — Shares</span>
+        <span class="example-scenario">Buy shares for €10,000, sell for €20,000 in July 2026</span>
+      </div>
+      <div class="example-body">
+        <div class="calc-row">
+          <div class="calc-label">Sale proceeds</div>
+          <div class="calc-amount neutral">€20,000</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Less: Original purchase cost<small>Your "base cost" — what you paid for the shares</small></div>
+          <div class="calc-amount credit">−€10,000</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Gross gain</div>
+          <div class="calc-amount neutral">€10,000</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Less: Annual personal exemption<small>Everyone gets this — use it or lose it each year</small></div>
+          <div class="calc-amount credit">−€1,270</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Taxable gain</div>
+          <div class="calc-amount neutral">€8,730</div>
+        </div>
+        <div class="calc-row takehome">
+          <div class="calc-label">CGT payable (€8,730 × 33%)</div>
+          <div class="calc-amount final">€2,880.90</div>
+        </div>
+        <hr class="divider" style="margin-top:0.75rem">
+        <div class="calc-row" style="margin-top:0.5rem">
+          <div class="calc-label" style="color:var(--white-3); font-size:0.78rem">Payment deadline<small>Sale in July (Jan–Nov) → pay by 15 December 2026</small></div>
+          <div class="calc-amount" style="color:var(--white-3); font-size:0.78rem">15 Dec 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Payment deadlines — critical:</strong> Gains from <strong>January to November</strong> must be paid by <strong>15 December</strong> of the same year. Gains made in <strong>December</strong> must be paid by <strong>31 January</strong> of the following year. Missing these dates results in interest charges.
+    </div>
+
+    <div class="callout good">
+      <strong>Losses can offset gains:</strong> If you made a loss on one investment and a gain on another in the same year, you can offset the loss against the gain to reduce your CGT bill. Unused losses can also be carried forward to future tax years.
+    </div>
+
+    <a class="source-link" href="https://www.revenue.ie/en/gains-gifts-and-inheritance/transfering-an-asset/index.aspx" target="_blank" rel="noopener">Official source: Revenue.ie — Capital Gains Tax on the disposal of an asset</a>
+  </section>
+
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <!-- 06 DEEMED DISPOSAL -->
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="tax-section" id="deemed-disposal">
+    <div class="section-header">
+      <div class="risk-badge">⚠ INVESTOR TRAP</div>
+      <div class="section-eyebrow">TAX TERM #6 — THE ONE NOBODY TELLS YOU</div>
+      <h2 class="section-title">DEEMED<br><span class="risk">DISPOSAL</span></h2>
+      <div class="section-subtitle">Diúscairt Mheasúnaithe — Republic of Ireland only · Unique to Ireland</div>
+    </div>
+
+    <p class="section-body">
+      Deemed Disposal is a rule <strong>unique to Ireland</strong> that applies to ETFs (Exchange Traded Funds) and other investment funds.
+      Under Section 739G of the Taxes Consolidation Act 1997, Revenue <strong>treats you as if you sold your investment every 8 years</strong> — even if you didn't.
+      Any gain at that point is taxable at <strong>38%</strong> (reduced from 41% in January 2026).
+    </p>
+
+    <p class="section-body">
+      This means you can owe real money in tax on <strong>paper gains you haven't realised</strong> — gains that exist only on paper and could disappear tomorrow. You must find cash to pay the tax on profits you haven't pocketed.
+    </p>
+
+    <div class="facts-grid">
+      <div class="fact-card">
+        <div class="fact-val">38%</div>
+        <div class="fact-label">Tax Rate</div>
+        <div class="fact-desc">Reduced from 41% in January 2026. Applies to gains on ETFs and investment funds held in Irish or EU domiciled structures.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-val">8 yrs</div>
+        <div class="fact-label">Trigger Point</div>
+        <div class="fact-desc">Revenue deems you to have sold on the 8th anniversary of your investment — and every 8 years after that.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-val">€0</div>
+        <div class="fact-label">Annual Exemption</div>
+        <div class="fact-desc">Unlike CGT, there is no €1,270 annual exemption. The full gain is taxable at 38%.</div>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="example-header">
+        <span class="example-label">Worked Example — ETF</span>
+        <span class="example-scenario">Buy an ETF for €10,000 in January 2018 · Value at 8-year mark: €18,000</span>
+      </div>
+      <div class="example-body">
+        <div class="calc-row">
+          <div class="calc-label">Value at 8-year deemed disposal date (Jan 2026)<small>Revenue treats this as a sale — even though you didn't sell</small></div>
+          <div class="calc-amount neutral">€18,000</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Original purchase cost (Jan 2018)</div>
+          <div class="calc-amount credit">−€10,000</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Deemed gain<small>No annual exemption applies here — unlike CGT</small></div>
+          <div class="calc-amount neutral">€8,000</div>
+        </div>
+        <div class="calc-row takehome">
+          <div class="calc-label">Tax due (€8,000 × 38%)</div>
+          <div class="calc-amount" style="color:var(--risk); font-size:1.2rem; font-family:var(--f-display); font-weight:900">€3,040</div>
+        </div>
+        <hr class="divider" style="margin-top:0.75rem">
+        <div class="calc-row" style="margin-top:0.5rem">
+          <div class="calc-label" style="color:var(--white-3); font-size:0.78rem">New cost basis going forward<small>If you later sell, your "cost" resets to €18,000 so you're not taxed twice on the same gain</small></div>
+          <div class="calc-amount" style="color:var(--white-3)">€18,000</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout risk">
+      <strong>Real-world consequence:</strong> You must pay €3,040 in cash to Revenue — even though you still own the ETF and haven't sold anything. If your ETF value drops after the deemed disposal date, you can't recover the tax already paid. This is why many Irish investors face a significant disadvantage compared to investors in the UK, US, or elsewhere in Europe.
+    </div>
+
+    <div class="callout">
+      <strong>Does not apply to:</strong> Individual shares (covered by CGT at 33%), directly held property, or pension funds. It only applies to ETFs, investment funds, and life assurance investment products that fall under the "exit tax" regime for funds. Always verify with a tax professional whether your specific product is caught by this rule.
+    </div>
+
+    <a class="source-link" href="https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-27/27-04-01A.pdf" target="_blank" rel="noopener">Official source: Revenue.ie — Investment Undertakings, Section 739G TCA 1997</a>
+  </section>
+
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <!-- 07 EXIT TAX -->
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="tax-section" id="exit-tax">
+    <div class="section-header">
+      <div class="section-eyebrow">TAX TERM #7 — LEAVING IRELAND?</div>
+      <h2 class="section-title">EXIT<br><span class="accent">TAX</span></h2>
+      <div class="section-subtitle">Cáin Imeachta — Republic of Ireland only</div>
+    </div>
+
+    <p class="section-body">
+      Exit Tax (also called a departure tax or "clawback") applies in two distinct contexts in Ireland:
+    </p>
+    <p class="section-body">
+      <strong>1. Emigrating from Ireland:</strong> If you cease to be Irish tax resident while holding investment assets (including shares and funds), Revenue may tax any gains that accrued while you were a resident — before you leave. This prevents people from moving abroad, selling there, and avoiding Irish tax entirely.
+    </p>
+    <p class="section-body">
+      <strong>2. Fund Exit Tax (on investment products):</strong> When you actually sell or exit an Irish-domiciled investment fund or life assurance product, a tax of <strong>38%</strong> applies to any gain. This is sometimes also called "exit tax" and is closely related to the Deemed Disposal regime.
+    </p>
+
+    <div class="facts-grid">
+      <div class="fact-card">
+        <div class="fact-val">38%</div>
+        <div class="fact-label">Rate on Fund Exits</div>
+        <div class="fact-desc">Applies when you actually sell out of an Irish-domiciled investment fund or life product.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-val">33%</div>
+        <div class="fact-label">Rate on Other Assets</div>
+        <div class="fact-desc">Gains on shares, crypto, and property when you emigrate are subject to standard CGT at 33%.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-val">4 yrs</div>
+        <div class="fact-label">Look-back Period</div>
+        <div class="fact-desc">Certain assets may be brought back into the Irish tax net if you return within 5 years of emigrating.</div>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="example-header">
+        <span class="example-label">Worked Example — Emigrating Investor</span>
+        <span class="example-scenario">You move from Ireland to Germany in March 2026 · You hold shares worth €80,000, originally bought for €50,000</span>
+      </div>
+      <div class="example-body">
+        <div class="calc-row">
+          <div class="calc-label">Market value of shares at emigration date</div>
+          <div class="calc-amount neutral">€80,000</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Original cost (purchased while Irish resident)</div>
+          <div class="calc-amount credit">−€50,000</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Accrued gain at departure<small>Revenue treats this as a disposal at the date you leave</small></div>
+          <div class="calc-amount neutral">€30,000</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Less: Annual exemption (CGT)<small>Applies here as these are shares, not funds</small></div>
+          <div class="calc-amount credit">−€1,270</div>
+        </div>
+        <div class="calc-row takehome">
+          <div class="calc-label">Potential CGT liability at departure (€28,730 × 33%)</div>
+          <div class="calc-amount final">€9,480.90</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="example-header">
+        <span class="example-label">Worked Example — Fund Exit Tax</span>
+        <span class="example-scenario">You sell your Irish investment fund for €35,000, originally invested €20,000</span>
+      </div>
+      <div class="example-body">
+        <div class="calc-row">
+          <div class="calc-label">Sale proceeds</div>
+          <div class="calc-amount neutral">€35,000</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Original investment cost</div>
+          <div class="calc-amount credit">−€20,000</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Gain<small>No annual €1,270 exemption applies — this is exit tax, not CGT</small></div>
+          <div class="calc-amount neutral">€15,000</div>
+        </div>
+        <div class="calc-row takehome">
+          <div class="calc-label">Exit Tax payable (€15,000 × 38%)</div>
+          <div class="calc-amount final">€5,700</div>
+        </div>
+        <hr class="divider" style="margin-top:0.75rem">
+        <div class="calc-row" style="margin-top:0.5rem">
+          <div class="calc-label" style="color:var(--white-3); font-size:0.78rem">Note: Fund deducts tax at source<small>You receive €29,300 — the fund pays the €5,700 to Revenue on your behalf</small></div>
+          <div class="calc-amount" style="color:var(--white-3)">€29,300</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout risk">
+      <strong>If you're planning to emigrate:</strong> Get proper tax advice before you leave. The rules around Irish exit tax and what assets are caught are complex. You may have a tax liability even on assets you plan to keep holding.
+    </div>
+  </section>
+
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <!-- 08 DIRT -->
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="tax-section" id="dirt">
+    <div class="section-header">
+      <div class="section-eyebrow">TAX TERM #8 — YOUR SAVINGS ACCOUNT</div>
+      <h2 class="section-title">DIRT<br>DEPOSIT INTEREST<br><span class="accent">RETENTION TAX</span></h2>
+      <div class="section-subtitle">Cáin Choinneála ar Ús Taisce — Republic of Ireland only</div>
+    </div>
+
+    <p class="section-body">
+      DIRT is the tax on interest earned in Irish savings accounts, deposit accounts, and credit union accounts.
+      Your bank or financial institution <strong>deducts it automatically</strong> — you never see the full interest in your account.
+      The DIRT rate has been <strong>33%</strong> since 2020 and remains at 33% for 2026.
+    </p>
+
+    <p class="section-body">
+      Most people never notice DIRT because it's silent. The interest displayed in your online banking is already <strong>after DIRT has been taken</strong>.
+    </p>
+
+    <div class="facts-grid">
+      <div class="fact-card">
+        <div class="fact-val">33%</div>
+        <div class="fact-label">DIRT Rate (2026)</div>
+        <div class="fact-desc">Deducted automatically by your bank before interest is credited to your account.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-val">0%</div>
+        <div class="fact-label">Over 65s / Disabled</div>
+        <div class="fact-desc">If you're aged 65+ (or permanently incapacitated) and your total income is below the exemption limit, you can reclaim DIRT or claim an exemption.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-val">Auto</div>
+        <div class="fact-label">Deducted at Source</div>
+        <div class="fact-desc">You don't file anything. The bank handles it. But it counts as a final liability — no further income tax on the same interest.</div>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="example-header">
+        <span class="example-label">Worked Example</span>
+        <span class="example-scenario">€20,000 in a savings account · AER 3% annual interest rate · Tax year 2026</span>
+      </div>
+      <div class="example-body">
+        <div class="calc-row">
+          <div class="calc-label">Annual interest earned (gross)<small>€20,000 × 3% — what you would get with no tax</small></div>
+          <div class="calc-amount neutral">€600.00</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">DIRT deducted by bank (€600 × 33%)<small>Taken automatically — you never see this</small></div>
+          <div class="calc-amount deduct">−€198.00</div>
+        </div>
+        <div class="calc-row takehome">
+          <div class="calc-label">Interest credited to your account (net)</div>
+          <div class="calc-amount final">€402.00</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="example-header">
+        <span class="example-label">Bigger Example</span>
+        <span class="example-scenario">€100,000 in savings · AER 3.5% · Tax year 2026</span>
+      </div>
+      <div class="example-body">
+        <div class="calc-row">
+          <div class="calc-label">Gross interest (€100,000 × 3.5%)</div>
+          <div class="calc-amount neutral">€3,500.00</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">DIRT (€3,500 × 33%)<small>Silently deducted by your bank or institution</small></div>
+          <div class="calc-amount deduct">−€1,155.00</div>
+        </div>
+        <div class="calc-row takehome">
+          <div class="calc-label">Net interest you actually receive</div>
+          <div class="calc-amount final">€2,345.00</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>DIRT and PRSI double tax:</strong> From October 2025, if your total non-PAYE income (including savings interest) exceeds €5,000/year, you may also owe <strong>4.2% PRSI</strong> on that interest — on top of the DIRT already paid. This is a Class K PRSI charge and does not give you any social insurance benefits.
+    </div>
+
+    <div class="callout good">
+      <strong>State Savings are DIRT-free:</strong> Interest earned on State Savings products (An Post State Savings) is exempt from DIRT. These products — including savings bonds and savings certificates — can be a tax-efficient way to hold cash. See <a href="https://www.statesavings.ie" target="_blank" rel="noopener" style="color:var(--green)">statesavings.ie</a> for current rates.
+    </div>
+
+    <a class="source-link" href="https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/tax-relief-charts/index.aspx" target="_blank" rel="noopener">Official source: Revenue.ie — DIRT rate confirmed at 33% for 2026</a>
+  </section>
+
+
+  <!-- TOTAL PICTURE -->
+  <section class="tax-section" id="summary" style="border-top: 1px solid var(--border);">
+    <div class="section-header">
+      <div class="section-eyebrow">PUTTING IT ALL TOGETHER</div>
+      <h2 class="section-title">TOTAL<br><span class="accent">TAX BURDEN</span></h2>
+      <div class="section-subtitle">Single PAYE employee · €60,000 salary · Republic of Ireland · 2026</div>
+    </div>
+
+    <p class="section-body">
+      Here's how all three payroll taxes stack up for a single Irish employee earning €60,000 before any additional credits.
+    </p>
+
+    <div class="example-box">
+      <div class="example-header">
+        <span class="example-label">Complete Payslip Summary</span>
+        <span class="example-scenario">Single person · No rent credit · Gross salary €60,000 · Tax year 2026</span>
+      </div>
+      <div class="example-body">
+        <div class="calc-row">
+          <div class="calc-label">Gross salary</div>
+          <div class="calc-amount neutral">€60,000</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Income Tax<small>€15,200 gross minus €4,000 credits</small></div>
+          <div class="calc-amount deduct">−€11,200</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">USC<small>Across 3 bands on €60,000</small></div>
+          <div class="calc-amount deduct">−€1,332.82</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">PRSI (Employee)<small>4.2% on full salary</small></div>
+          <div class="calc-amount deduct">−€2,520</div>
+        </div>
+        <div class="calc-row total">
+          <div class="calc-label">Total deductions</div>
+          <div class="calc-amount deduct">€15,052.82</div>
+        </div>
+        <div class="calc-row takehome">
+          <div class="calc-label">Annual take-home pay</div>
+          <div class="calc-amount final">€44,947.18</div>
+        </div>
+        <hr class="divider" style="margin-top:0.75rem">
+        <div class="calc-row" style="margin-top:0.5rem">
+          <div class="calc-label" style="color:var(--white-3); font-size:0.78rem">Effective total tax rate<small>Total deductions as % of gross salary</small></div>
+          <div class="calc-amount" style="color:var(--white-3)">25.1%</div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-label" style="color:var(--white-3); font-size:0.78rem">Monthly take-home<small>Divide by 12</small></div>
+          <div class="calc-amount" style="color:var(--white-3)">€3,745.60</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout good">
+      <strong>Add the Rent Tax Credit (€1,000):</strong> If you're renting and claim the Rent Tax Credit, your annual take-home rises to €45,947.18 — that's €1,000 more in your pocket. Always check what credits you're entitled to.
+    </div>
+  </section>
+
+  <a href="#top" class="back-top">↑ Back to top</a>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-brand">insights<em>by</em>maddy</div>
+    <p class="footer-text">
+      Plain English Finance is an educational series breaking down personal finance concepts for Irish residents.
+      All figures are for the Republic of Ireland only and reflect the 2026 tax year. Tax laws change — always
+      verify at <a href="https://www.revenue.ie" target="_blank" rel="noopener">revenue.ie</a> or consult a
+      qualified tax advisor for your personal circumstances.
+    </p>
+    <div class="footer-sources">
+      <div class="footer-sources-title">Official sources used</div>
+      <ul class="source-list">
+        <li><a href="https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/tax-relief-charts/index.aspx" target="_blank" rel="noopener">Revenue.ie — Tax Rates, Bands &amp; Reliefs 2026</a></li>
+        <li><a href="https://www.revenue.ie/en/jobs-and-pensions/usc/standard-rates-thresholds.aspx" target="_blank" rel="noopener">Revenue.ie — USC Rates &amp; Thresholds 2026</a></li>
+        <li><a href="https://www.revenue.ie/en/gains-gifts-and-inheritance/transfering-an-asset/index.aspx" target="_blank" rel="noopener">Revenue.ie — CGT on Asset Disposal</a></li>
+        <li><a href="https://www.citizensinformation.ie/en/social-welfare/irish-social-welfare-system/social-insurance-prsi/social-insurance/" target="_blank" rel="noopener">CitizensInformation.ie — Social Insurance (PRSI)</a></li>
+        <li><a href="https://www.statesavings.ie" target="_blank" rel="noopener">State Savings — An Post</a></li>
+      </ul>
+    </div>
+    <p style="font-size:0.62rem; color:var(--white-3); margin-top:1.5rem;">
+      © 2026 insightsbymaddy · @insightsbymaddy · Not financial advice · Republic of Ireland only
+    </p>
+  </footer>
+
+</div>
+
+<script>
+// Smooth active state for TOC links
+const sections = document.querySelectorAll('.tax-section, #summary');
+const tocLinks = document.querySelectorAll('.toc-link');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      tocLinks.forEach(link => link.style.color = '');
+      const id = entry.target.id;
+      const active = document.querySelector(`.toc-link[href="#${id}"]`);
+      if (active) active.style.color = 'var(--ember)';
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
