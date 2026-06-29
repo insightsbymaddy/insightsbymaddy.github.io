@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>insightsbymaddy — Resources</title>
+  <meta name="description" content="Free finance tools, in-depth guides, and research reports. Plain English. No jargon." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --void: #080808; --surface: #101010; --surface-2: #181818;
+      --border: #272727; --border-2: #333;
+      --ember: #E84320; --ember-hot: #FF5533; --ember-dim: #7A2210;
+      --white: #F2F2F2; --white-2: #999; --white-3: #444;
+      --f-display: 'Barlow Condensed', sans-serif;
+      --f-body: 'Inter', sans-serif;
+      --f-italic: 'Playfair Display', serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--void); color: var(--white); font-family: var(--f-body); min-height: 100vh; overflow-x: hidden; }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-size: 48px 48px; pointer-events: none; z-index: 0;
+    }
+    .glow-blob {
+      position: fixed; width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(232,67,32,0.07) 0%, transparent 70%);
+      top: -250px; right: -200px; pointer-events: none; z-index: 0;
+    }
+
+    /* NAV */
+    nav { position: relative; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 24px 48px; border-bottom: 1px solid var(--border); }
+    .nav-brand { font-family: var(--f-display); font-weight: 900; font-size: 17px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); text-decoration: none; }
+    .nav-brand span { color: var(--ember); }
+    .nav-right { display: flex; align-items: center; gap: 32px; }
+    .nav-link { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white-2); text-decoration: none; transition: color 0.2s; }
+    .nav-link:hover { color: var(--ember); }
+
+    /* HERO */
+    .hero { position: relative; z-index: 1; padding: 96px 48px 72px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; max-width: 1200px; }
+    .hero-eyebrow { font-family: var(--f-display); font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ember); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .hero-eyebrow::before { content: ''; display: block; width: 28px; height: 1px; background: var(--ember); }
+    .hero-headline { font-family: var(--f-display); font-weight: 900; font-size: clamp(60px, 8vw, 100px); line-height: 0.9; text-transform: uppercase; letter-spacing: -0.01em; color: var(--white); margin-bottom: 28px; }
+    .hero-headline .accent { color: var(--ember); }
+    .hero-sub { font-family: var(--f-italic); font-style: italic; font-size: 18px; color: var(--white-2); line-height: 1.65; margin-bottom: 32px; }
+    .hero-stats { display: flex; gap: 32px; }
+    .stat-num { font-family: var(--f-display); font-weight: 900; font-size: 36px; color: var(--white); line-height: 1; }
+    .stat-num span { color: var(--ember); }
+    .stat-label { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white-3); margin-top: 4px; }
+
+    /* DIVIDER */
+    .section-divider { position: relative; z-index: 1; margin: 0 48px; border: none; border-top: 1px solid var(--border); }
+
+    /* FILTER BAR */
+    .filter-bar { position: relative; z-index: 1; padding: 24px 48px; display: flex; align-items: center; gap: 4px; border-bottom: 1px solid var(--border); }
+    .filter-btn { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white-3); background: none; border: 1px solid transparent; padding: 8px 16px; cursor: pointer; transition: all 0.18s; border-radius: 2px; }
+    .filter-btn:hover { color: var(--white-2); border-color: var(--border-2); }
+    .filter-btn.active { color: var(--white); border-color: var(--border-2); background: var(--surface); }
+
+    /* CONTENT */
+    .content-section { position: relative; z-index: 1; padding: 56px 48px 80px; }
+    .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 32px; }
+    .section-title-group { display: flex; align-items: baseline; gap: 16px; }
+    .section-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ember); }
+    .section-title { font-family: var(--f-display); font-weight: 900; font-size: 32px; text-transform: uppercase; letter-spacing: 0.02em; color: var(--white); }
+
+    /* INSIGHT CARDS */
+    .insights-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1px; border: 1px solid var(--border); margin-bottom: 64px; }
+    .insight-card { background: var(--surface); padding: 36px 32px; display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden; transition: background 0.2s; }
+    .insight-card:hover { background: var(--surface-2); }
+    .insight-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--ember); transform: scaleX(0); transform-origin: left; transition: transform 0.25s ease; }
+    .insight-card:hover::after { transform: scaleX(1); }
+    .insight-card.coming-soon { opacity: 0.38; pointer-events: none; }
+    .card-type-row { display: flex; align-items: center; justify-content: space-between; }
+    .card-type { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 4px 8px; border-radius: 1px; }
+    .card-type.guide { color: #7AB8FF; border: 1px solid #1A3A5C; }
+    .card-type.report { color: #A78BFA; border: 1px solid #3B2F6B; }
+    .card-format { font-size: 9px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white-3); }
+    .card-title { font-family: var(--f-display); font-weight: 900; font-size: 24px; text-transform: uppercase; letter-spacing: 0.02em; color: var(--white); line-height: 1.05; }
+    .card-desc { font-size: 13px; color: var(--white-2); line-height: 1.65; }
+    .card-actions { margin-top: 8px; display: flex; align-items: center; gap: 16px; }
+    .card-cta { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white-3); text-decoration: none; transition: color 0.2s; }
+    .card-cta.primary { color: var(--ember); }
+    .insight-card:hover .card-cta { color: var(--white-2); }
+    .insight-card:hover .card-cta.primary { color: var(--ember-hot); }
+    .card-sep { width: 1px; height: 12px; background: var(--border-2); }
+    .coming-badge { font-size: 9px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--white-3); border: 1px solid var(--border-2); padding: 4px 10px; width: fit-content; }
+
+    /* TOOL CARDS */
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1px; border: 1px solid var(--border); }
+    .tool-card { background: var(--surface); padding: 36px 32px; text-decoration: none; display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden; transition: background 0.2s; }
+    .tool-card:hover { background: var(--surface-2); }
+    .tool-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--ember); transform: scaleY(0); transform-origin: bottom; transition: transform 0.25s ease; }
+    .tool-card:hover::before { transform: scaleY(1); }
+    .tool-card.coming-soon { opacity: 0.38; pointer-events: none; }
+    .tool-number { font-family: var(--f-display); font-weight: 900; font-size: 52px; line-height: 1; color: var(--ember); opacity: 0.12; position: absolute; top: 16px; right: 20px; letter-spacing: -0.02em; }
+    .tool-ep { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ember); }
+    .tool-name { font-family: var(--f-display); font-weight: 900; font-size: 26px; text-transform: uppercase; letter-spacing: 0.02em; color: var(--white); line-height: 1.05; }
+    .tool-desc { font-size: 13px; color: var(--white-2); line-height: 1.6; }
+    .tool-arrow { margin-top: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white-3); display: flex; align-items: center; gap: 8px; transition: color 0.2s, gap 0.2s; }
+    .tool-card:hover .tool-arrow { color: var(--ember); gap: 12px; }
+
+    /* BOTTOM STRIP */
+    .bottom-strip { position: relative; z-index: 1; background: var(--surface); border-top: 1px solid var(--border); padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+    .strip-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white-3); margin-bottom: 8px; }
+    .strip-text { font-family: var(--f-italic); font-style: italic; font-size: 15px; color: var(--white-2); line-height: 1.5; max-width: 480px; }
+    .strip-text strong { color: var(--white); font-style: normal; font-family: var(--f-body); font-weight: 600; }
+    .ig-btn { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--void); background: var(--ember); padding: 14px 28px; text-decoration: none; border-radius: 2px; transition: background 0.2s; white-space: nowrap; }
+    .ig-btn:hover { background: var(--ember-hot); }
+
+    /* FOOTER */
+    footer { position: relative; z-index: 1; padding: 28px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; border-top: 1px solid var(--border); }
+    .footer-brand { font-family: var(--f-display); font-weight: 900; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white-3); }
+    .footer-brand span { color: var(--ember); }
+    .footer-note { font-size: 11px; color: var(--white-3); }
+
+    /* SECTION SPACING */
+    .section-tools { margin-top: 0; }
+    .section-insights + .section-tools { margin-top: 64px; }
+
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .hero { grid-template-columns: 1fr; padding: 64px 24px 48px; gap: 32px; }
+      .hero-headline { font-size: 58px; }
+      .section-divider { margin: 0 24px; }
+      .filter-bar { padding: 20px 24px; }
+      .content-section { padding: 40px 24px 64px; }
+      .bottom-strip { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
+      .ig-btn { width: 100%; text-align: center; }
+      footer { padding: 24px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tool-card::before, .insight-card::after, .tool-arrow { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow-blob"></div>
+
+  <nav>
+    <a class="nav-brand" href="/">insights<span>by</span>maddy</a>
+    <div class="nav-right">
+      <a class="nav-link" href="#insights">Insights</a>
+      <a class="nav-link" href="#tools">Tools</a>
+      <a class="nav-link" href="https://instagram.com/insightsbymaddy" target="_blank" rel="noopener">↗ Instagram</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">insightsbymaddy — Resources</div>
+      <h1 class="hero-headline">
+        Know<br>Your<br><span class="accent">Money.</span>
+      </h1>
+    </div>
+    <div class="hero-right">
+      <p class="hero-sub">In-depth guides, research reports, and free calculators. Finance in plain English — so you can make better decisions with your money.</p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">2<span>+</span></div>
+          <div class="stat-label">Free Tools</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">4<span>+</span></div>
+          <div class="stat-label">Episodes</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">0<span>€</span></div>
+          <div class="stat-label">Always Free</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterContent('all', this)">All</button>
+    <button class="filter-btn" onclick="filterContent('insight', this)">Insights &amp; Guides</button>
+    <button class="filter-btn" onclick="filterContent('tool', this)">Calculators</button>
+  </div>
+
+  <section class="content-section">
+
+    <!-- INSIGHTS & GUIDES -->
+    <div id="insights" class="section-insights">
+      <div class="section-head">
+        <div class="section-title-group">
+          <span class="section-tag">Insights</span>
+          <h2 class="section-title">Guides &amp; Reports</h2>
+        </div>
+      </div>
+      <div class="insights-grid">
+
+        <div class="insight-card">
+          <div class="card-type-row">
+            <span class="card-type guide">Guide</span>
+            <span class="card-format">PDF · Preview + Download</span>
+          </div>
+          <div class="card-title">A Plain English<br>Guide to Taxes</div>
+          <p class="card-desc">Every major tax type — income, VAT, capital gains, inheritance — explained without the jargon. What you owe, why, and how it's calculated.</p>
+          <div class="card-actions">
+            <a class="card-cta primary" href="./guides/taxes/">Read Online →</a>
+            <div class="card-sep"></div>
+            <a class="card-cta" href="./guides/taxes/taxes-plain-english.pdf" download>↓ Download PDF</a>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-type-row">
+            <span class="card-type report">Report</span>
+            <span class="card-format">PDF · Preview + Download</span>
+          </div>
+          <div class="card-title">Inflation in<br>Europe: 2020–2024</div>
+          <p class="card-desc">What happened to prices across the Eurozone over four years. Real data, plain context, and what it meant for your savings.</p>
+          <div class="card-actions">
+            <a class="card-cta primary" href="./reports/inflation-europe/">Read Online →</a>
+            <div class="card-sep"></div>
+            <a class="card-cta" href="./reports/inflation-europe/report.pdf" download>↓ Download PDF</a>
+          </div>
+        </div>
+
+        <div class="insight-card coming-soon">
+          <div class="card-type-row">
+            <span class="card-type guide">Guide</span>
+            <span class="card-format">Coming Soon</span>
+          </div>
+          <div class="card-title">Investing for<br>Beginners</div>
+          <p class="card-desc">From zero to your first investment. ETFs, index funds, risk, and time horizon — all in plain English.</p>
+          <div class="card-actions">
+            <div class="coming-badge">Follow for updates</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TOOLS -->
+    <div id="tools" class="section-tools">
+      <div class="section-head">
+        <div class="section-title-group">
+          <span class="section-tag">Tools</span>
+          <h2 class="section-title">Calculators</h2>
+        </div>
+      </div>
+      <div class="tools-grid">
+
+        <a class="tool-card" href="./compound-interest/">
+          <div class="tool-number">01</div>
+          <div class="tool-ep">EP03 · Compound Interest</div>
+          <div class="tool-name">Compound<br>Interest</div>
+          <p class="tool-desc">See how money grows over time — and why starting early beats starting big.</p>
+          <div class="tool-arrow">Open Calculator →</div>
+        </a>
+
+        <a class="tool-card" href="./inflation-calculator/">
+          <div class="tool-number">02</div>
+          <div class="tool-ep">EP04 · Inflation</div>
+          <div class="tool-name">Inflation<br>Impact</div>
+          <p class="tool-desc">Find out how much your €1,000 will actually be worth in 10, 20, or 30 years.</p>
+          <div class="tool-arrow">Open Calculator →</div>
+        </a>
+
+        <div class="tool-card coming-soon">
+          <div class="tool-number">03</div>
+          <div class="tool-ep">Coming Soon</div>
+          <div class="tool-name">More<br>Tools</div>
+          <p class="tool-desc">New calculators drop with every Plain English Finance episode.</p>
+          <div class="coming-badge">Follow for updates</div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <div class="bottom-strip">
+    <div>
+      <div class="strip-label">From the series</div>
+      <p class="strip-text">Every guide and tool here is built alongside <strong>Plain English Finance</strong> — the Instagram carousel series that makes money make sense.</p>
+    </div>
+    <a class="ig-btn" href="https://instagram.com/insightsbymaddy" target="_blank" rel="noopener">Follow on Instagram ↗</a>
+  </div>
+
+  <footer>
+    <div class="footer-brand">insights<span>by</span>maddy</div>
+    <div class="footer-note">For education only. Not financial advice.</div>
+  </footer>
+
+  <script>
+    function filterContent(type, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const insights = document.querySelector('.section-insights');
+      const tools = document.querySelector('.section-tools');
+      if (type === 'all') { insights.style.display = ''; tools.style.display = ''; }
+      else if (type === 'insight') { insights.style.display = ''; tools.style.display = 'none'; }
+      else if (type === 'tool') { insights.style.display = 'none'; tools.style.display = ''; }
+    }
+  </script>
+
+</body>
+</html>
